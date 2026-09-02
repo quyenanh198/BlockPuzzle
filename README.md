@@ -1,5 +1,7 @@
 # Xếp Gạch
 
+Chơi online: https://quyenanh198.github.io/BlockPuzzle/
+
 Tetris clone bằng HTML, CSS và JavaScript thuần. Không cần cài đặt.
 
 ## Chơi
