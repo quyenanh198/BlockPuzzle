@@ -1,0 +1,110 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  touch-action: manipulation;
+  background: #2e1b10;
+  color: #f3e6d0;
+  font-family: system-ui, sans-serif;
+}
+
+.game {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: 100vh;
+}
+
+canvas {
+  border: 3px solid #1c100a;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+#board {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 2;
+}
+
+#next { width: 120px; height: 120px; }
+
+.panel {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+h1 { font-size: 22px; margin: 0; }
+h2 { font-size: 14px; margin: 0 0 6px; color: #c9a97e; }
+p { margin: 4px 0; }
+.help { font-size: 12px; color: #b89a78; }
+
+button {
+  padding: 8px;
+  border: 2px solid #1c100a;
+  border-radius: 4px;
+  background: #8a5a35;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+button:hover { background: #a06a3e; }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 32px;
+  font-weight: bold;
+}
+.hidden { display: none; }
+
+.controls {
+  display: none;
+  gap: 8px;
+  padding: 0 20px 20px;
+}
+.controls button {
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  background: #5a3a22;
+  user-select: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .game { height: calc(100vh - 80px); }
+  .controls {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 8px;
+    background: rgba(28, 16, 10, 0.9);
+  }
+}
+
+@media (max-width: 520px) {
+  .game { gap: 12px; padding: 12px; }
+  #board { height: 100%; max-width: 60vw; }
+  #next { width: 80px; height: 80px; }
+  .panel { width: 110px; font-size: 14px; }
+  h1 { font-size: 18px; }
+  .help { display: none; }
+}

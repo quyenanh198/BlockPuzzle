@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xếp Gạch</title>
+  <meta name="theme-color" content="#3b2314">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game">
+    <canvas id="board" width="600" height="1200"></canvas>
+    <aside class="panel">
+      <h1>Xếp Gạch</h1>
+      <section>
+        <h2>Tiếp theo</h2>
+        <canvas id="next" width="240" height="240"></canvas>
+      </section>
+      <section>
+        <p>Điểm: <strong id="score">0</strong></p>
+        <p>Hàng: <strong id="lines">0</strong></p>
+        <p>Cấp: <strong id="level">1</strong></p>
+        <p>Kỷ lục: <strong id="highscore">0</strong></p>
+      </section>
+      <section class="help">
+        <p>← → di chuyển</p>
+        <p>↑ xoay</p>
+        <p>↓ rơi nhanh</p>
+        <p>Space rơi ngay</p>
+        <p>P tạm dừng</p>
+      </section>
+      <button id="restart">Chơi lại</button>
+    </aside>
+    <div id="overlay" class="overlay hidden"></div>
+  </main>
+  <nav class="controls">
+    <button data-action="left">←</button>
+    <button data-action="rotate">↻</button>
+    <button data-action="right">→</button>
+    <button data-action="down">↓</button>
+    <button data-action="drop">⤓</button>
+  </nav>
+  <script src="tetris.js"></script>
+  <script src="main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  </script>
+</body>
+</html>
