@@ -19,6 +19,7 @@
         <p>Điểm: <strong id="score">0</strong></p>
         <p>Hàng: <strong id="lines">0</strong></p>
         <p>Cấp: <strong id="level">1</strong></p>
+        <p>Kỷ lục: <strong id="highscore">0</strong></p>
       </section>
       <section class="help">
         <p>← → di chuyển</p>
@@ -31,6 +32,13 @@
     </aside>
     <div id="overlay" class="overlay hidden"></div>
   </main>
+  <nav class="controls">
+    <button data-action="left">←</button>
+    <button data-action="rotate">↻</button>
+    <button data-action="right">→</button>
+    <button data-action="down">↓</button>
+    <button data-action="drop">⤓</button>
+  </nav>
   <script src="tetris.js"></script>
   <script src="main.js"></script>
 </body>
