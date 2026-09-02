@@ -4,16 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xếp Gạch</title>
+  <meta name="theme-color" content="#3b2314">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="game">
-    <canvas id="board" width="300" height="600"></canvas>
+    <canvas id="board" width="600" height="1200"></canvas>
     <aside class="panel">
       <h1>Xếp Gạch</h1>
       <section>
         <h2>Tiếp theo</h2>
-        <canvas id="next" width="120" height="120"></canvas>
+        <canvas id="next" width="240" height="240"></canvas>
       </section>
       <section>
         <p>Điểm: <strong id="score">0</strong></p>
@@ -41,5 +45,8 @@
   </nav>
   <script src="tetris.js"></script>
   <script src="main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  </script>
 </body>
 </html>

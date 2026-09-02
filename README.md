@@ -4,7 +4,13 @@ Tetris clone bằng HTML, CSS và JavaScript thuần. Không cần cài đặt.
 
 ## Chơi
 
-Mở `index.html` trong trình duyệt.
+Chạy một HTTP server tĩnh rồi mở trong trình duyệt (service worker cần HTTP, không chạy qua `file://`):
+
+```
+python3 -m http.server 8000
+```
+
+Là PWA: có thể "Thêm vào màn hình chính" trên điện thoại hoặc cài từ thanh địa chỉ trên desktop, chạy offline sau lần tải đầu.
 
 | Phím | Hành động |
 |------|-----------|

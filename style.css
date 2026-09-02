@@ -6,10 +6,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   touch-action: manipulation;
-  background: #111;
-  color: #eee;
+  background: #2e1b10;
+  color: #f3e6d0;
   font-family: system-ui, sans-serif;
 }
 
@@ -18,13 +18,23 @@ body {
   display: flex;
   gap: 20px;
   padding: 20px;
+  height: 100vh;
 }
 
 canvas {
-  background: #000;
-  border: 2px solid #444;
+  border: 3px solid #1c100a;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
   display: block;
 }
+
+#board {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 2;
+}
+
+#next { width: 120px; height: 120px; }
 
 .panel {
   width: 160px;
@@ -34,20 +44,20 @@ canvas {
 }
 
 h1 { font-size: 22px; margin: 0; }
-h2 { font-size: 14px; margin: 0 0 6px; color: #aaa; }
+h2 { font-size: 14px; margin: 0 0 6px; color: #c9a97e; }
 p { margin: 4px 0; }
-.help { font-size: 12px; color: #888; }
+.help { font-size: 12px; color: #b89a78; }
 
 button {
   padding: 8px;
-  border: none;
+  border: 2px solid #1c100a;
   border-radius: 4px;
-  background: #3a7bd5;
+  background: #8a5a35;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
 }
-button:hover { background: #2f66b3; }
+button:hover { background: #a06a3e; }
 
 .overlay {
   position: absolute;
@@ -70,29 +80,31 @@ button:hover { background: #2f66b3; }
   width: 56px;
   height: 56px;
   font-size: 24px;
-  background: #333;
+  background: #5a3a22;
   user-select: none;
 }
 
 @media (hover: none), (pointer: coarse) {
-  .controls { display: flex; }
-}
-
-@media (max-width: 520px) {
-  body { justify-content: flex-start; padding-bottom: 90px; }
-  .game { gap: 12px; padding: 12px; }
-  #board { width: min(55vw, 35vh); height: auto; }
-  #next { width: 80px; height: 80px; }
-  .panel { width: 110px; font-size: 14px; }
-  h1 { font-size: 18px; }
-  .help { display: none; }
+  .game { height: calc(100vh - 80px); }
   .controls {
+    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    height: 80px;
     justify-content: center;
-    padding: 12px;
-    background: #111;
+    align-items: center;
+    padding: 0 8px;
+    background: rgba(28, 16, 10, 0.9);
   }
+}
+
+@media (max-width: 520px) {
+  .game { gap: 12px; padding: 12px; }
+  #board { height: 100%; max-width: 60vw; }
+  #next { width: 80px; height: 80px; }
+  .panel { width: 110px; font-size: 14px; }
+  h1 { font-size: 18px; }
+  .help { display: none; }
 }

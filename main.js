@@ -1,4 +1,4 @@
-const CELL = 30;
+const CELL = 60;
 const boardCanvas = document.getElementById('board');
 const boardCtx = boardCanvas.getContext('2d');
 const nextCanvas = document.getElementById('next');
@@ -85,6 +85,44 @@ function makeTile(type) {
   return c;
 }
 
+// Wood surface: planks with grain, used for the board background and page.
+function makeWood(width, height, base, seed, plank) {
+  const c = document.createElement('canvas');
+  c.width = width;
+  c.height = height;
+  const ctx = c.getContext('2d');
+  const rand = seededRandom(seed);
+  for (let px = 0; px < width; px += plank) {
+    const tone = shade(base, (rand() - 0.5) * 30);
+    ctx.fillStyle = tone;
+    ctx.fillRect(px, 0, plank, height);
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i < 14; i++) {
+      const x0 = px + rand() * plank;
+      const amp = 2 + rand() * 6;
+      const freq = 0.01 + rand() * 0.02;
+      const phase = rand() * Math.PI * 2;
+      ctx.strokeStyle = shade(tone, -20 - rand() * 25);
+      ctx.globalAlpha = 0.3 + rand() * 0.4;
+      ctx.beginPath();
+      for (let y = 0; y <= height; y += 4) {
+        const x = x0 + Math.sin(y * freq + phase) * amp;
+        y === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(px + 1, 1, plank - 2, height - 2);
+  }
+  return c;
+}
+
+const boardBg = makeWood(boardCanvas.width, boardCanvas.height, '#4a2e1b', 42, CELL * 2);
+const nextBg = makeWood(nextCanvas.width, nextCanvas.height, '#4a2e1b', 43, CELL * 2);
+document.body.style.backgroundImage = `url(${makeWood(512, 512, '#2e1b10', 7, 128).toDataURL()})`;
+
 function drawCell(ctx, x, y, type, alpha = 1) {
   if (!tiles[type]) tiles[type] = makeTile(type);
   ctx.globalAlpha = alpha;
@@ -101,7 +139,7 @@ function drawPiece(ctx, piece, ox, oy, alpha) {
 }
 
 function render() {
-  boardCtx.clearRect(0, 0, boardCanvas.width, boardCanvas.height);
+  boardCtx.drawImage(boardBg, 0, 0);
   game.board.forEach((row, y) => {
     row.forEach((cell, x) => {
       if (cell) drawCell(boardCtx, x, y, cell);
@@ -112,7 +150,7 @@ function render() {
     drawPiece(boardCtx, game.piece, game.piece.x, game.piece.y);
   }
 
-  nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+  nextCtx.drawImage(nextBg, 0, 0);
   const next = spawnPiece(game.nextType);
   const w = next.shape[0].length;
   const h = next.shape.length;
