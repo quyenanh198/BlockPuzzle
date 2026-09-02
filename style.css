@@ -1,0 +1,60 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  color: #eee;
+  font-family: system-ui, sans-serif;
+}
+
+.game {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+canvas {
+  background: #000;
+  border: 2px solid #444;
+  display: block;
+}
+
+.panel {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+h1 { font-size: 22px; margin: 0; }
+h2 { font-size: 14px; margin: 0 0 6px; color: #aaa; }
+p { margin: 4px 0; }
+.help { font-size: 12px; color: #888; }
+
+button {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background: #3a7bd5;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+button:hover { background: #2f66b3; }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 32px;
+  font-weight: bold;
+}
+.hidden { display: none; }

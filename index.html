@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xếp Gạch</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game">
+    <canvas id="board" width="300" height="600"></canvas>
+    <aside class="panel">
+      <h1>Xếp Gạch</h1>
+      <section>
+        <h2>Tiếp theo</h2>
+        <canvas id="next" width="120" height="120"></canvas>
+      </section>
+      <section>
+        <p>Điểm: <strong id="score">0</strong></p>
+        <p>Hàng: <strong id="lines">0</strong></p>
+        <p>Cấp: <strong id="level">1</strong></p>
+      </section>
+      <section class="help">
+        <p>← → di chuyển</p>
+        <p>↑ xoay</p>
+        <p>↓ rơi nhanh</p>
+        <p>Space rơi ngay</p>
+        <p>P tạm dừng</p>
+      </section>
+      <button id="restart">Chơi lại</button>
+    </aside>
+    <div id="overlay" class="overlay hidden"></div>
+  </main>
+  <script src="tetris.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
