@@ -15,19 +15,87 @@ let paused = false;
 let lastDrop = 0;
 let highscore = Number(localStorage.getItem(HIGHSCORE_KEY)) || 0;
 
-function drawCell(ctx, x, y, color, alpha = 1) {
+// Pre-rendered wooden tile per piece type: base wood color, grain lines, bevel.
+const tiles = {};
+
+function shade(hex, amount) {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = (v) => Math.max(0, Math.min(255, Math.round(v + amount)));
+  const r = ch(n >> 16), g = ch((n >> 8) & 255), b = ch(n & 255);
+  return `rgb(${r},${g},${b})`;
+}
+
+function seededRandom(seed) {
+  let s = seed;
+  return () => {
+    s = (s * 1664525 + 1013904223) % 4294967296;
+    return s / 4294967296;
+  };
+}
+
+function makeTile(type) {
+  const size = CELL * 2; // render at 2x for sharper scaling
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const base = COLORS[type];
+  const rand = seededRandom(type.charCodeAt(0) * 7919);
+
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, size, size);
+
+  // Grain: wavy horizontal lines in a darker tone.
+  ctx.lineWidth = 1.2;
+  for (let i = 0; i < 9; i++) {
+    const y0 = (i + rand()) * size / 9;
+    const amp = 1.5 + rand() * 3;
+    const freq = 0.15 + rand() * 0.2;
+    const phase = rand() * Math.PI * 2;
+    ctx.strokeStyle = shade(base, -25 - rand() * 30);
+    ctx.globalAlpha = 0.45 + rand() * 0.35;
+    ctx.beginPath();
+    for (let x = 0; x <= size; x += 2) {
+      const y = y0 + Math.sin(x * freq + phase) * amp;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // Bevel: light top/left, dark bottom/right.
+  const b = size * 0.14;
+  ctx.fillStyle = shade(base, 55);
+  ctx.beginPath();
+  ctx.moveTo(0, 0); ctx.lineTo(size, 0); ctx.lineTo(size - b, b);
+  ctx.lineTo(b, b); ctx.lineTo(b, size - b); ctx.lineTo(0, size);
+  ctx.closePath();
+  ctx.globalAlpha = 0.55;
+  ctx.fill();
+  ctx.fillStyle = shade(base, -70);
+  ctx.beginPath();
+  ctx.moveTo(size, size); ctx.lineTo(0, size); ctx.lineTo(b, size - b);
+  ctx.lineTo(size - b, size - b); ctx.lineTo(size - b, b); ctx.lineTo(size, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(1, 1, size - 2, size - 2);
+  return c;
+}
+
+function drawCell(ctx, x, y, type, alpha = 1) {
+  if (!tiles[type]) tiles[type] = makeTile(type);
   ctx.globalAlpha = alpha;
-  ctx.fillStyle = color;
-  ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
-  ctx.strokeStyle = '#000';
-  ctx.strokeRect(x * CELL, y * CELL, CELL, CELL);
+  ctx.drawImage(tiles[type], x * CELL, y * CELL, CELL, CELL);
   ctx.globalAlpha = 1;
 }
 
 function drawPiece(ctx, piece, ox, oy, alpha) {
   piece.shape.forEach((row, r) => {
     row.forEach((cell, c) => {
-      if (cell) drawCell(ctx, ox + c, oy + r, COLORS[piece.type], alpha);
+      if (cell) drawCell(ctx, ox + c, oy + r, piece.type, alpha);
     });
   });
 }
@@ -36,7 +104,7 @@ function render() {
   boardCtx.clearRect(0, 0, boardCanvas.width, boardCanvas.height);
   game.board.forEach((row, y) => {
     row.forEach((cell, x) => {
-      if (cell) drawCell(boardCtx, x, y, COLORS[cell]);
+      if (cell) drawCell(boardCtx, x, y, cell);
     });
   });
   if (!game.gameOver) {

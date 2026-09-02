@@ -13,9 +13,10 @@ const SHAPES = {
   L: [[0, 0, 1], [1, 1, 1], [0, 0, 0]],
 };
 
+// Wood tones per piece: maple, pine, walnut, oak, mahogany, teak, cherry.
 const COLORS = {
-  I: '#00f0f0', O: '#f0f000', T: '#a000f0', S: '#00f000',
-  Z: '#f00000', J: '#0000f0', L: '#f0a000',
+  I: '#d9b382', O: '#e3c48c', T: '#6b4a2e', S: '#b98a55',
+  Z: '#7a3b2a', J: '#9c6b3c', L: '#a8563a',
 };
 
 const LINE_SCORES = [0, 100, 300, 500, 800];
